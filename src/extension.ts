@@ -333,7 +333,7 @@ class FileBrowser {
                 break;
             }
             case Action.NewFile: {
-                const uri = this.path.append(item.name).uri;
+                const uri = this.path.parent().append(item.name).uri;
                 this.openFile(uri.with({ scheme: "untitled" }));
                 break;
             }

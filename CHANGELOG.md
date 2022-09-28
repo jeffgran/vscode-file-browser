@@ -6,6 +6,12 @@ All notable changes to the "file-browser" extension will be documented in this f
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this
 file.
 
+## [0.2.13]
+
+### CHANGED
+
+-   Bugfix: create new file action didn't work because path was wrong.
+
 ## [0.2.12]
 
 ### CHANGED

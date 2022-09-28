@@ -3,7 +3,7 @@
     "publisher": "jeffgran",
     "displayName": "Quick File Browser",
     "description": "A nicer alternative to the file open dialog.",
-    "version": "0.2.12",
+    "version": "0.2.13",
     "license": "LGPL-3.0+",
     "author": {
         "name": "Bodil Stokke",
