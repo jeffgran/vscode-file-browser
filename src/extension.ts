@@ -97,25 +97,42 @@ class FileBrowser {
         this.current.show();
         this.current.busy = true;
         this.current.title = this.path.fsPath;
-        // this.current.value = "";
+        if (!this.inActions) {
+            this.current.value = "";
+        }
 
         const stat = (await Result.try(vscode.workspace.fs.stat(this.path.uri))).unwrap();
         if (stat && this.inActions && (stat.type & FileType.File) === FileType.File) {
             const selectedFile = new Path(this.path.uri).pop().unwrap();
-            this.items = [
-                action(`$(new-file) Create file: ${this.current.value}`, Action.NewFile, this.current.value),
+            this.items = [];
+            if (this.current.value !== selectedFile && this.current.value !== "") {
+                this.items.push(...[
+                    action(`$(new-file) Create file: ${this.current.value}`, Action.NewFile, this.current.value),
+                    action(`$(new-folder) Create folder: ${this.current.value}`, Action.NewFolder, this.current.value),
+                ]);
+            }
+            this.items.push(...[
                 action(`$(file) Open file '${selectedFile}'`, Action.OpenFile),
                 action(`$(split-horizontal) Open file '${selectedFile}' to the side`, Action.OpenFileBeside),
                 action(`$(edit) Rename file '${selectedFile}'`, Action.RenameFile),
                 action(`$(trash) Delete file '${selectedFile}'`, Action.DeleteFile),
-            ];
+            ]);
+
             this.current.items = this.items;
         } else if (
             stat &&
             this.inActions &&
             (stat.type & FileType.Directory) === FileType.Directory
         ) {
-            this.items = [
+            const selectedDir = new Path(this.path.uri).pop().unwrap();
+            this.items = [];
+            if (this.current.value !== selectedDir && this.current.value !== "") {
+                this.items.push(...[
+                    action(`$(new-file) Create file: ${this.current.value}`, Action.NewFile, this.current.value),
+                    action(`$(new-folder) Create folder: ${this.current.value}`, Action.NewFolder, this.current.value),
+                ]);
+            }
+            this.items.push(...[
                 action("$(folder-opened) Open this folder", Action.OpenFolder),
                 action(
                     "$(folder-opened) Open this folder in a new window",
@@ -123,7 +140,7 @@ class FileBrowser {
                 ),
                 action("$(edit) Rename this folder", Action.RenameFile),
                 action("$(trash) Delete this folder", Action.DeleteFile),
-            ];
+            ]);
             this.current.items = this.items;
         } else if (stat && (stat.type & FileType.Directory) === FileType.Directory) {
             const records = await vscode.workspace.fs.readDirectory(this.path.uri);
@@ -140,7 +157,10 @@ class FileBrowser {
             this.current.items = items;
             this.current.activeItems = items.filter((item) => this.file.contains(item.name));
         } else {
-            this.items = [action("$(new-folder) Create this folder", Action.NewFolder)];
+            this.items = [
+                action(`$(new-file) Create file: ${this.current.value}`, Action.NewFile, this.current.value),
+                action("$(new-folder) Create this folder", Action.NewFolder, this.current.value)
+            ];
             this.current.items = this.items;
         }
         this.current.enabled = true;
@@ -304,7 +324,10 @@ class FileBrowser {
     async runAction(item: FileItem) {
         switch (item.action) {
             case Action.NewFolder: {
-                await vscode.workspace.fs.createDirectory(this.path.uri);
+                const uri = this.path.parent().append(item.name).uri;
+                await vscode.workspace.fs.createDirectory(uri);
+                this.path = new Path(uri);
+                this.inActions = false;
                 await this.update();
                 break;
             }
