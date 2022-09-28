@@ -1,7 +1,7 @@
 {
-    "name": "file-browser",
-    "publisher": "bodil",
-    "displayName": "File Browser",
+    "name": "quick-file-browser",
+    "publisher": "jeffgran",
+    "displayName": "Quick File Browser",
     "description": "A nicer alternative to the file open dialog.",
     "version": "0.2.12",
     "license": "LGPL-3.0+",
@@ -11,7 +11,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/bodil/vscode-file-browser"
+        "url": "https://github.com/jeffgran/vscode-file-browser"
     },
     "keywords": [
         "emacs",
@@ -26,7 +26,7 @@
     ],
     "activationEvents": [
         "onStartupFinished",
-        "onCommand:file-browser.open"
+        "onCommand:quick-file-browser.open"
     ],
     "main": "./out/extension.js",
     "extensionKind": [
@@ -37,27 +37,27 @@
         "configuration": {
             "title": "File Browser",
             "properties": {
-                "file-browser.removeIgnoredFiles": {
-                    "markdownDescription": "Never show or match files that are hidden when matching by either `#file-browser.hideIgnoredFiles#` or `#file-browser.hideDotfiles#`.",
+                "quick-file-browser.removeIgnoredFiles": {
+                    "markdownDescription": "Never show or match files that are hidden when matching by either `#quick-file-browser.hideIgnoredFiles#` or `#quick-file-browser.hideDotfiles#`.",
                     "type": "boolean",
                     "default": false
                 },
-                "file-browser.hideDotfiles": {
+                "quick-file-browser.hideDotfiles": {
                     "markdownDescription": "When filtering by name, hide unmatched dotfiles (files whose names start with `.`).",
                     "type": "boolean",
                     "default": true
                 },
-                "file-browser.hideIgnoredFiles": {
-                    "markdownDescription": "When filtering by name, hide unmatched files according to rules in `.gitignore` style files, as defined in `#file-browser.ignoreFileTypes#`.",
+                "quick-file-browser.hideIgnoredFiles": {
+                    "markdownDescription": "When filtering by name, hide unmatched files according to rules in `.gitignore` style files, as defined in `#quick-file-browser.ignoreFileTypes#`.",
                     "type": "boolean",
                     "default": false
                 },
-                "file-browser.labelIgnoredFiles": {
+                "quick-file-browser.labelIgnoredFiles": {
                     "markdownDescription": "Label files hidden by a `.gitignore` file as such.",
                     "type": "boolean",
                     "default": false
                 },
-                "file-browser.ignoreFileTypes": {
+                "quick-file-browser.ignoreFileTypes": {
                     "markdownDescription": "A list of `.gitignore` style files to look for and hide files accordingly when browsing. The extension will obey only the first file it finds from this list, searching upwards from the current directory, so make sure the order is as you like it.",
                     "type": "array",
                     "items": {
@@ -73,46 +73,46 @@
         },
         "commands": [
             {
-                "command": "file-browser.open",
+                "command": "quick-file-browser.open",
                 "title": "File Browser: Open"
             },
             {
-                "command": "file-browser.stepIn",
+                "command": "quick-file-browser.stepIn",
                 "title": "File Browser: Step In"
             },
             {
-                "command": "file-browser.stepOut",
+                "command": "quick-file-browser.stepOut",
                 "title": "File Browser: Step Out"
             },
             {
-                "command": "file-browser.actions",
+                "command": "quick-file-browser.actions",
                 "title": "File Browser: Actions"
             }
         ],
         "keybindings": [
             {
                 "key": "right",
-                "command": "file-browser.stepIn",
+                "command": "quick-file-browser.stepIn",
                 "when": "inFileBrowser"
             },
             {
                 "key": "left",
-                "command": "file-browser.stepOut",
+                "command": "quick-file-browser.stepOut",
                 "when": "inFileBrowser"
             },
             {
                 "key": "ctrl+a",
-                "command": "file-browser.actions",
+                "command": "quick-file-browser.actions",
                 "when": "inFileBrowser"
             },
             {
                 "key": "tab",
-                "command": "file-browser.tabNext",
+                "command": "quick-file-browser.tabNext",
                 "when": "inFileBrowser"
             },
             {
                 "key": "shift+tab",
-                "command": "file-browser.tabPrev",
+                "command": "quick-file-browser.tabPrev",
                 "when": "inFileBrowser"
             }
         ]

@@ -18,7 +18,7 @@ export enum ConfigItem {
 }
 
 export function config<A>(item: ConfigItem): A | undefined {
-    return vscode.workspace.getConfiguration("file-browser").get(item);
+    return vscode.workspace.getConfiguration("quick-file-browser").get(item);
 }
 
 let active: Option<FileBrowser> = None;
@@ -163,6 +163,7 @@ class FileBrowser {
             ];
             this.current.items = this.items;
         }
+        this.current.busy = false;
         this.current.enabled = true;
     }
 
@@ -440,7 +441,7 @@ export function activate(context: vscode.ExtensionContext) {
     setContext(false);
 
     context.subscriptions.push(
-        vscode.commands.registerCommand("file-browser.open", () => {
+        vscode.commands.registerCommand("quick-file-browser.open", () => {
             const document = vscode.window.activeTextEditor?.document;
             let workspaceFolder =
                 vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders[0];
@@ -456,27 +457,27 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(
-        vscode.commands.registerCommand("file-browser.stepIn", () =>
+        vscode.commands.registerCommand("quick-file-browser.stepIn", () =>
             active.ifSome((active) => active.stepIn())
         )
     );
     context.subscriptions.push(
-        vscode.commands.registerCommand("file-browser.stepOut", () =>
+        vscode.commands.registerCommand("quick-file-browser.stepOut", () =>
             active.ifSome((active) => active.stepOut())
         )
     );
     context.subscriptions.push(
-        vscode.commands.registerCommand("file-browser.actions", () =>
+        vscode.commands.registerCommand("quick-file-browser.actions", () =>
             active.ifSome((active) => active.actions())
         )
     );
     context.subscriptions.push(
-        vscode.commands.registerCommand("file-browser.tabNext", () =>
+        vscode.commands.registerCommand("quick-file-browser.tabNext", () =>
             active.ifSome((active) => active.tabCompletion(true))
         )
     );
     context.subscriptions.push(
-        vscode.commands.registerCommand("file-browser.tabPrev", () =>
+        vscode.commands.registerCommand("quick-file-browser.tabPrev", () =>
             active.ifSome((active) => active.tabCompletion(false))
         )
     );

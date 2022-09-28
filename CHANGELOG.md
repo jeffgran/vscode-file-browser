@@ -10,9 +10,10 @@ file.
 
 ### CHANGED
 
--   Currently the extension is activated when user calls the file browser open command for the first time. To make it responsive, activated it after the StartupFinished. This does not add delay to the vscode startup.
--    Removed the 'open as new file' inline command. This was annoying and was forcing the user to type the full name of file/folder.
--        Moved the 'open as new file' inline command to under the action menu.
+-   Renamed extension to `quick-file-browser` for republishing new versions.
+-   Activate on StartupFinished.
+-   Removed the 'open as new file' inline command at the top of the results. This was annoying and was forcing the user to type the full name of file/folder.
+-   Moved the 'open as new file' inline command to under the action menu.
 
 ## [0.2.11]
 
