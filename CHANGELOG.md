@@ -6,13 +6,20 @@ All notable changes to the "file-browser" extension will be documented in this f
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this
 file.
 
+## [0.2.12]
+
+### CHANGED
+
+-   Currently the extension is activated when user calls the file browser open command for the first time. To make it responsive, activated it after the StartupFinished. This does not add delay to the vscode startup.
+-    Removed the 'open as new file' inline command. This was annoying and was forcing the user to type the full name of file/folder.
+-        Moved the 'open as new file' inline command to under the action menu.
 
 ## [0.2.11]
 
 ### CHANGED
 
 -   While loading the file list, show a 'busy' animation untill the files are ready to be shown.
-    
+
 ## [0.2.10]
 
 ### CHANGED
