@@ -6,6 +6,12 @@ All notable changes to the "file-browser" extension will be documented in this f
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this
 file.
 
+## [0.2.14]
+
+### CHANGED
+
+-   Add new config item `quick-file-browser.uriSchemeUriCommandMap` to allow using a custom command to find the starting URI for weird virtual file schemes.
+
 ## [0.2.13]
 
 ### CHANGED
