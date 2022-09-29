@@ -15,6 +15,7 @@ export enum ConfigItem {
     HideIgnoreFiles = "hideIgnoredFiles",
     IgnoreFileTypes = "ignoreFileTypes",
     LabelIgnoredFiles = "labelIgnoredFiles",
+    UriSchemeUriCommandMap = "uriSchemeUriCommandMap",
 }
 
 export function config<A>(item: ConfigItem): A | undefined {
@@ -441,13 +442,19 @@ export function activate(context: vscode.ExtensionContext) {
     setContext(false);
 
     context.subscriptions.push(
-        vscode.commands.registerCommand("quick-file-browser.open", () => {
+        vscode.commands.registerCommand("quick-file-browser.open", async () => {
             const document = vscode.window.activeTextEditor?.document;
             let workspaceFolder =
                 vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders[0];
             let path = new Path(workspaceFolder?.uri || Uri.file(OS.homedir()));
             let file: Option<string> = None;
-            if (document && !document.isUntitled) {
+            const uriSchemeMap: any = config(ConfigItem.UriSchemeUriCommandMap) || {};
+            if (document && uriSchemeMap.hasOwnProperty(document.uri.scheme)) {
+                const uri: vscode.Uri | undefined = await vscode.commands.executeCommand(uriSchemeMap[document.uri.scheme]);
+                if (uri) {
+                    path = new Path(uri);
+                }
+            } else if (document && !document.isUntitled) {
                 path = new Path(document.uri);
                 file = path.pop();
             }

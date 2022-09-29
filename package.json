@@ -68,6 +68,16 @@
                         ".npmignore",
                         ".vscodeignore"
                     ]
+                },
+                 "quick-file-browser.uriSchemeUriCommandMap": {
+                    "markdownDescription": "(advanced) a map of uri schemes to command names. The named command will be invoked when quick-file-browser is invoked while the active text editor has the given scheme. The command must return the uri of the path where quick-file-browser should start.",
+                    "type": "object",
+                    "patternProperties": {
+                        ".*": { "type": "string" }
+                    },
+                    "default": {
+                        "comint": "comint.getCwdUri"
+                    }
                 }
             }
         },
