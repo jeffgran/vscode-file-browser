@@ -157,7 +157,9 @@ class FileBrowser {
             }
             this.items = items;
             this.current.items = items;
-            this.current.activeItems = items.filter((item) => this.file.contains(item.name));
+            this.current.activeItems = this.file.option !== undefined 
+                    ? items.filter((item) => this.file.contains(item.name)) 
+                    : items[0];
         } else {
             this.items = [
                 action(`$(new-file) Create file: ${this.current.value}`, Action.NewFile, this.current.value),
