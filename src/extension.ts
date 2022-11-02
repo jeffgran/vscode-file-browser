@@ -94,10 +94,11 @@ class FileBrowser {
     }
 
     async update() {
-        this.current.enabled = false;
+        this.current.enabled = true;
         this.current.show();
         this.current.busy = true;
         this.current.title = this.path.fsPath;
+        
         if (!this.inActions) {
             this.current.value = "";
         }
@@ -164,8 +165,8 @@ class FileBrowser {
             ];
             this.current.items = this.items;
         }
+        
         this.current.busy = false;
-        this.current.enabled = true;
     }
 
     onDidChangeValue(value: string, isAutoComplete = false) {
