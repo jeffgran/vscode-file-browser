@@ -253,6 +253,14 @@ class FileBrowser {
         }
     }
 
+    async openActiveFileHorizontalSplit() {
+        this.activeItem().ifSome(item => {
+            if(item.fileType === FileType.File) {
+                this.openFile(this.path.append(item.name).uri, ViewColumn.Beside);
+            }
+        });
+    }
+
     async actions() {
         if (this.inActions) {
             return;
@@ -491,6 +499,11 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerCommand("quick-file-browser.tabPrev", () =>
             active.ifSome((active) => active.tabCompletion(false))
+        )
+    );
+    context.subscriptions.push(
+        vscode.commands.registerCommand("quick-file-browser.openFileHorizontalSplit", () =>
+            active.ifSome((active) => active.openActiveFileHorizontalSplit())
         )
     );
 }
