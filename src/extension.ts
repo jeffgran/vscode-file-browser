@@ -1,13 +1,13 @@
-import * as vscode from "vscode";
-import { Uri, FileType, QuickInputButton, ThemeIcon, ViewColumn } from "vscode";
 import * as OS from "os";
 import * as OSPath from "path";
+import * as vscode from "vscode";
+import { FileType, QuickInputButton, ThemeIcon, Uri, ViewColumn } from "vscode";
 
-import { Result, None, Option, Some } from "./rust";
-import { Path, endsWithPathSeparator } from "./path";
-import { Rules } from "./filter";
+import { Action, action } from "./action";
 import { FileItem, fileRecordCompare } from "./fileitem";
-import { action, Action } from "./action";
+import { Rules } from "./filter";
+import { Path, endsWithPathSeparator } from "./path";
+import { None, Option, Result, Some } from "./rust";
 
 export enum ConfigItem {
     RemoveIgnoredFiles = "removeIgnoredFiles",
@@ -71,6 +71,7 @@ class FileBrowser {
         this.current.onDidAccept(this.onDidAccept.bind(this));
         this.current.onDidChangeValue(this.onDidChangeValue.bind(this));
         this.current.onDidTriggerButton(this.onDidTriggerButton.bind(this));
+        this.current.onDidTriggerItemButton(this.onDidTriggerItemButton.bind(this));
         this.update().then(() => {
             this.current.placeholder = "Type a file name here to search or open a new file";
             this.current.busy = false;
@@ -208,6 +209,10 @@ class FileBrowser {
         } else if (button === this.actionsButton) {
             this.actions();
         }
+    }
+
+    onDidTriggerItemButton(button: vscode.QuickPickItemButtonEvent<FileItem>) {
+        this.openFile(this.path.append(button.item.name).uri, ViewColumn.Beside);
     }
 
     activeItem(): Option<FileItem> {
